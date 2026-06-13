@@ -1,0 +1,5 @@
+Fonction :
+    abr_est_present : non feuille
+Contexte :
+    val : registre a0
+    abr : registre a1
