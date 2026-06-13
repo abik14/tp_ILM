@@ -1,0 +1,6 @@
+Fonction :
+    hash_hash : feuille
+Contexte :
+    key : registre a0
+    hash : registre t0
+    c : registre t1

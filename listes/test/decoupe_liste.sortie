@@ -1,0 +1,27 @@
+** Test d'un tableau quelconque **
+Tableau initial : 1 8 7 4 1 5 7 3 1 8 
+Liste initiale : 8 -> 1 -> 3 -> 7 -> 5 -> 1 -> 4 -> 7 -> 8 -> 1 -> FIN
+Liste initiale apres le decoupage : FIN
+Liste des elements impairs : 1 -> 3 -> 7 -> 5 -> 1 -> 7 -> 1 -> FIN
+Liste des elements pairs : 8 -> 4 -> 8 -> FIN
+
+** Test d'un tableau avec seulement des elements pairs **
+Tableau initial : 6 8 4 6 4 8 2 4 4 6 
+Liste initiale : 6 -> 4 -> 4 -> 2 -> 8 -> 4 -> 6 -> 4 -> 8 -> 6 -> FIN
+Liste initiale apres le decoupage : FIN
+Liste des elements impairs : FIN
+Liste des elements pairs : 6 -> 4 -> 4 -> 2 -> 8 -> 4 -> 6 -> 4 -> 8 -> 6 -> FIN
+
+** Test d'un tableau avec seulement des elements impairs **
+Tableau initial : 9 3 7 5 5 1 9 3 1 1 
+Liste initiale : 1 -> 1 -> 3 -> 9 -> 1 -> 5 -> 5 -> 7 -> 3 -> 9 -> FIN
+Liste initiale apres le decoupage : FIN
+Liste des elements impairs : 1 -> 1 -> 3 -> 9 -> 1 -> 5 -> 5 -> 7 -> 3 -> 9 -> FIN
+Liste des elements pairs : FIN
+
+** Test d'un tableau vide **
+Tableau initial : 
+Liste initiale : FIN
+Liste initiale apres le decoupage : FIN
+Liste des elements impairs : FIN
+Liste des elements pairs : FIN
