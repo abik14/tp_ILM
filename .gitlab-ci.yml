@@ -1,0 +1,64 @@
+# Gitlab ci/cd file configuration
+image: gitlab.ensimag.fr:5050/viardots/ilm_image_docker
+variables:
+    REF: "main"
+    TOOLCHAIN_PATH: "/matieres/3MMCEP/riscv/bin"
+    TOCLEAN: "config .git .gitlab-ci.yml"
+    TPDIRS: "traduction fonctions tableaux listes arbres hash"
+
+stages:
+    - test
+    - eval
+    - cleanup
+
+student_test:
+    tags:
+        - docker
+    stage: test
+    only:
+        - master
+        - main
+    before_script:
+        # Check the version of the tools we use
+        - awk --version | head -n 1
+        - cpp --version | head -n 1
+        - riscv64-unknown-elf-gcc --version | head -n 1
+        - git --version
+        #- make --version | head -n 1
+        - sed --version | head -n 1
+        - bison --version | head -n 1
+        - flex --version
+    script:
+        - for tp in ${TPDIRS}; do (cd $tp; make -s clean; ../common/verif_etud.sh); done
+    artifacts:
+        paths:
+            - ./*/test/*.sortie  # Pour savoir quoi évaluer mais contenu ignoré
+            - ./*/*.s
+        exclude:
+            - common/
+            - lib/
+
+trigger_eval:
+    tags:
+        - docker
+    stage: eval
+    only:
+        - master
+        - main
+    dependencies:
+        - student_test
+    before_script:
+        # Check the version of the tools we use
+        - curl --version | head -n 1
+    script:
+        - rm -rvf ${TOCLEAN}
+        - curl $OPT --request POST --form "token=${EVAL_TOKEN}" --form ref=${REF} ${REP}/api/v4/projects/${EVAL_PROJECT_ID}/trigger/pipeline
+
+cleanup_job:
+    stage: cleanup
+    tags:
+        - docker
+    script:
+        - echo "On failure -> cleaning sensitive data"
+        - rm -rvf ${TOCLEAN} ${TPDIRS}
+    when: on_failure
